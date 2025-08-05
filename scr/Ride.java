@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 // Ride class implements RideInterface
@@ -30,6 +31,27 @@ public class Ride implements RideInterface{
     
     // Parameterized constructor
     public Ride(String rideName, int minHeight, int maxRider, Employee rideOperator) {
+    	
+    	// Checking if ride name is valid
+        if (rideName == null || rideName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Ride name cannot be null or empty");
+        }
+        
+       // Checking if minimum height is within acceptable range
+        if (minHeight < 0 || minHeight > 300) {
+            throw new IllegalArgumentException("Minimum height must be between 0 and 300 cm");
+        }
+        
+      // Checking maximum rider count is reasonable
+        if (maxRider <= 0 || maxRider > 50) {
+            throw new IllegalArgumentException("Maximum riders must be between 1 and 50");
+        }
+        
+        // Checking if ride operator is assigned
+        if (rideOperator == null) {
+            throw new IllegalArgumentException("Ride operator cannot be null");
+        }
+        
         this.rideName = rideName;
         this.minHeight = minHeight;
         this.maxRider = maxRider;
@@ -76,12 +98,12 @@ public class Ride implements RideInterface{
         return numOfCycles;
     }
     
+    // Method to add a Visitor to the Queue
     @Override 
     public void addVisitorToQueue(Visitor visitor) {
     	
     	if (visitor != null) {
-    		
-    		visitorQueue.offer(visitor);
+    		visitorQueue.add(visitor);
     		 System.out.println("Visitor " + visitor.getName() + " added to queue successfully.");
     	} else {
             System.out.println("Failed to add visitor to queue - visitor is null.");
@@ -89,11 +111,12 @@ public class Ride implements RideInterface{
     	
     	}
     
+    // Method to remove a Visitor from the Queue
     @Override 
     public void removeVisitorFromQueue() {
     	
     	 if (!visitorQueue.isEmpty()) {
-             Visitor removed = visitorQueue.poll();
+             Visitor removed = visitorQueue.remove();
              System.out.println("Visitor " + removed.getName() + " removed from queue successfully.\n");
          } else {
              System.out.println("Failed to remove visitor - queue is empty.");
@@ -101,6 +124,7 @@ public class Ride implements RideInterface{
     	 
     }
     
+    // Method to prints details for all Visitors in the Queue in the order they were added
 	@Override
 	public void printQueue() {
 		
@@ -118,7 +142,7 @@ public class Ride implements RideInterface{
 		}
 	}
 
-	
+	// Method to add a visitor to the ride history 
 	@Override
 	public void addVisitorToHistory(Visitor visitor) {
 		
@@ -128,9 +152,10 @@ public class Ride implements RideInterface{
         } else {
             System.out.println("Failed to add visitor to history - visitor is null.");
         }
-
+        	
 	}
-
+	
+	// Method to check whether the visitor is in the ride history
 	@Override
 	public boolean checkVisitorFromHistory(Visitor visitor) {
 		
@@ -142,7 +167,8 @@ public class Ride implements RideInterface{
 	        }
 	        return found;
 	}
-
+	
+    // Method to return the number of Visitors in the ride history 
 	@Override
 	public int numberOfVisitors() {
 		
@@ -150,7 +176,8 @@ public class Ride implements RideInterface{
 	        System.out.println("Number of visitors in ride history: " + count+"\n");
 	        return count;
 	}
-
+	
+	// Method to print the details of all Visitors who have taken the Ride
 	@Override
 	public void printRideHistory() {
 		
@@ -171,7 +198,12 @@ public class Ride implements RideInterface{
 			 position++;
 		 }
 	}
-		
+		 
+		 // Sort ride history using Comparator
+		 
+		 public void sortRideHistory() {}
+		 
+	// Ride operation method
 	@Override
 	public void runOneCycle() {
 		
@@ -190,7 +222,7 @@ public class Ride implements RideInterface{
 			
 		}
 		
-		 // Run the cycle - move visitors from queue to history
+		 // Run the cycle - moving visitors from queue to history
         int ridersThisCycle = Math.min(maxRider, visitorQueue.size());
         System.out.println("Running ride cycle - taking " + ridersThisCycle + " visitors on the ride.\n");
 
@@ -204,6 +236,29 @@ public class Ride implements RideInterface{
         System.out.println("Ride cycle completed. Total cycles run: " + numOfCycles);
 		
 	}
-		
-}
 	
+	 // Exporting ride history to file
+	
+	public void exportRideHistory() {
+    try {
+        FileWriter writer = new FileWriter("ride_history.csv");
+        
+        for (Visitor visitor : rideHistory) {
+        	
+        	// Writing visitor data as CSV format
+        	String line = visitor.getName() + "," + visitor.getAge() + "," + 
+        	visitor.getAddress() + "," + visitor.getTicketType() + "," + visitor.getVisitDate() + "\n";
+            writer.write(line);
+        }
+        
+        writer.close();
+        System.out.println("Ride history exported to ride_history.csv successfully.\n");
+        
+    } 
+    
+    catch (IOException e) {
+        System.out.println("Error exporting ride history: " + e.getMessage());
+    }
+}
+    
+}

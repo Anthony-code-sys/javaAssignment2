@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Ride implements RideInterface{
 	
-	// Ride instance variables
+	// Ride class instance variables
 	
 	private String rideName;
 	private int minHeight;

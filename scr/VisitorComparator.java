@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-// VisitorComparator implements Comparator interface
+//VisitorComparator implements Comparator interface
 // Used to sort visitors by name first, then by age
 public class VisitorComparator implements Comparator<Visitor>{
 	

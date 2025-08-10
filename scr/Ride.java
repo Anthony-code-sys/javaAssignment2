@@ -1,12 +1,12 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 // Ride class implements RideInterface
 // Manages theme park rides, queues, and visitor history
 
 public class Ride implements RideInterface{
 	
-	// Ride class instance variables
+	// Ride instance variables
 	
 	private String rideName;
 	private int minHeight;
@@ -201,7 +201,12 @@ public class Ride implements RideInterface{
 		 
 		 // Sort ride history using Comparator
 		 
-		 public void sortRideHistory() {}
+		 public void sortRideHistory() {
+		
+			 Collections.sort(rideHistory, new VisitorComparator());
+			 System.out.println("Ride history sorted successfully.\n");
+			 
+		    }
 		 
 	// Ride operation method
 	@Override
@@ -261,4 +266,51 @@ public class Ride implements RideInterface{
     }
 }
     
+    // Importing ride history from file
+    public void importRideHistory() {
+        try {
+            File file = new File("ride_history.csv");
+            if (!file.exists()) {
+                System.out.println("File ride_history.csv not found.");
+                return;
+            }
+            
+            Scanner scanner = new Scanner(file);
+            rideHistory.clear(); // Clear existing history
+            
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] data = line.split(",");
+                
+                if (data.length >= 5) {
+                    // Create visitor from file data
+                    String name = data[0];
+                    int age = Integer.parseInt(data[1]);
+                    String address = data[2];
+                    String ticketType = data[3];
+                    String visitDate = data[4];
+                    
+                    Visitor visitor = new Visitor(name, age, address, ticketType, visitDate);
+                    rideHistory.add(visitor);
+                }
+            }
+            
+            scanner.close();
+            System.out.println("Ride history imported successfully. " + rideHistory.size() + " visitors loaded.");
+            
+          // Handle case where file cannot be found/opened  
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File not found - " + e.getMessage());
+            
+          // Handle case where age field cannot be converted to integer  
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Invalid number format in file - " + e.getMessage());
+            
+          // Handle any other unexpected errors during import  
+        } catch (Exception e) {
+            System.out.println("Error importing ride history: " + e.getMessage());
+        }
+}
+	
+		
 }

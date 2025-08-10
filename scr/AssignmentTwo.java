@@ -1,18 +1,18 @@
+// AssignmentTwo - Main class for Park Rides Visitor Management System 
+
 public class AssignmentTwo {
-
 	
-    // main method
-	 public static void main(String[] args) {  
-
-        AssignmentTwo assignment = new AssignmentTwo();
+	 public static void main(String[] args) {
+		 
+		 AssignmentTwo assignment = new AssignmentTwo();
 		 
 		 
 		 System.out.println(" Park Rides Visitor Management System \n");
 		 
 		 System.out.println(" Part Three : Queue Management \n");
 		 assignment.partThree();
-
-         System.out.println(" Part FourA : Collection Management \n");
+		 
+		 System.out.println(" Part FourA : Collection Management \n");
 		 assignment.partFourA();
 		 
 		 System.out.println(" Part FourB : Sorting Collection \n");
@@ -20,10 +20,16 @@ public class AssignmentTwo {
 		 
 		 System.out.println(" Part Five : Running Ride Cycles \n");
 		 assignment.partFive();
-
-    }
-
-    // Part Three : Demonstrate queue functionality 
+		 
+		 System.out.println(" Part Six : Export to File \n");
+		 assignment.partSix();
+		 
+		 System.out.println(" Part Seven : Import from File \n");
+		 assignment.partSeven();
+		 
+	 }
+	 
+	 // Part Three : Demonstrate queue functionality
 	 
 	 public void partThree() {
 		 
@@ -167,7 +173,52 @@ public class AssignmentTwo {
 	    bumperCars.printRideHistory();
 		 
 	 }
-    public void partSix(){}
-    public void partSeven(){} 
-
+	 
+	 // part six : Demonstrate exporting to file
+	 
+	 public void partSix() {
+		 
+		 // Creating a ferris wheel ride
+		 
+		 Employee operator = new Employee("Robert Kim", 29, "505 Garden St", "EMP005", "Ride Operator");
+		 Ride ferrisWheel = new Ride("Giant Ferris Wheel", 110, 4, operator);
+		 
+		 // Adding 5 visitors to ride history
+		 
+	     Visitor visitor1 = new Visitor("Jennifer Lopez", 26, "606 Rose Ave", "Premium Pass", "2024-07-23");
+	     Visitor visitor2 = new Visitor("Michael Jordan", 45, "707 Sports Blvd", "VIP Pass", "2024-07-23");
+	     Visitor visitor3 = new Visitor("Emma Stone", 30, "808 Movie St", "Day Pass", "2024-07-23");
+	     Visitor visitor4 = new Visitor("Ryan Reynolds", 35, "909 Comedy Ave", "Premium Pass", "2024-07-23");
+         Visitor visitor5 = new Visitor("Scarlett Johansson", 32, "1010 Action St", "VIP Pass", "2024-07-23");
+	        
+         // Adding visitors to history
+         
+         ferrisWheel.addVisitorToHistory(visitor1);
+         ferrisWheel.addVisitorToHistory(visitor2);
+         ferrisWheel.addVisitorToHistory(visitor3);
+         ferrisWheel.addVisitorToHistory(visitor4);
+         ferrisWheel.addVisitorToHistory(visitor5);
+         
+         // Exporting to file
+         ferrisWheel.exportRideHistory();
+	 }
+	 
+	 // Part seven: Demonstrate importing from file
+	 public void partSeven() {
+		 
+		 // creating a drop tower ride
+		 
+		 Employee operator = new Employee("Amanda Davis", 27, "1111 Import St", "EMP006", "Ride Operator");
+		 Ride dropTower = new Ride("Drop Tower", 120, 5, operator);
+		 
+		 // Import from file
+		 dropTower.importRideHistory();
+	        
+	     // Print number of visitors to confirm import
+		 dropTower.numberOfVisitors();
+	        
+	     // Print all visitors to confirm details
+		 dropTower.printRideHistory();
+	 }
+		 
 }

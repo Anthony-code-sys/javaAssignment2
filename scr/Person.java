@@ -4,9 +4,9 @@ public abstract class Person {
 	
 	// Three instance variables for person
 	
-	private String name;
-	private int age;
-	private String address;
+	protected String name;
+	protected int age;
+	protected String address;
 	
 	// Default constructor
 	
